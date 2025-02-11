@@ -3,42 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rotating Radial Navigation</title>
+  <title>IT-Themed Rotating Radial Navigation</title>
   <!-- Link to external CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- IT-Themed Network Canvas Background -->
+  <canvas id="networkCanvas"></canvas>
+
+  <!-- A decorative tagline -->
+  <div class="tagline">Welcome to Our IT Navigation</div>
+
   <!-- Navigation wrapper: falls into place, then activates the menu -->
   <div class="nav-wrapper" id="navWrapper">
-    <!-- Main button (remains open-only) -->
+    <!-- Main button (opens the menu) with a gear icon -->
     <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu">
-      &#9776;
+      &#9881;
     </button>
-    <!-- Radial menu containing four items -->
+    <!-- Radial menu containing directory links -->
     <nav class="menu">
       <!-- Each menu item is wrapped so we can animate its orbit -->
       <div class="menu-item-wrapper">
-        <div class="menu-item">
-          <span class="menu-item-inner">H</span>
-        </div>
+        <a href="home.html" class="menu-item">
+          <span class="menu-item-inner">Home</span>
+        </a>
       </div>
       <div class="menu-item-wrapper">
-        <div class="menu-item">
-          <span class="menu-item-inner">A</span>
-        </div>
+        <a href="about.html" class="menu-item">
+          <span class="menu-item-inner">About</span>
+        </a>
       </div>
       <div class="menu-item-wrapper">
-        <div class="menu-item">
-          <span class="menu-item-inner">P</span>
-        </div>
+        <a href="projects.html" class="menu-item">
+          <span class="menu-item-inner">Projects</span>
+        </a>
       </div>
       <div class="menu-item-wrapper">
-        <div class="menu-item">
-          <span class="menu-item-inner">C</span>
-        </div>
+        <a href="contact.html" class="menu-item">
+          <span class="menu-item-inner">Contact</span>
+        </a>
       </div>
     </nav>
   </div>
+
   <!-- Link to external JS -->
   <script src="script.js"></script>
 </body>

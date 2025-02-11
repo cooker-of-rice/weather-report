@@ -4,22 +4,49 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* Body with a rich diagonal gradient background for depth */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background: linear-gradient(135deg, #1a1a40, #000020);
   height: 100vh;
-  overflow: hidden; /* Prevent scrolling during animations */
+  overflow: hidden;
+  position: relative;
+}
+
+/* === IT-Themed Network Canvas Background === */
+#networkCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Behind all elements */
+}
+
+/* === Tagline Styling === */
+.tagline {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 24px;
+  z-index: 2;
+  opacity: 0.9;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
 /* === Falling Animation for the Main Button === */
-/* The nav-wrapper starts off-screen and falls into the center */
 .nav-wrapper {
   position: absolute;
   left: 50%;
   top: -150px; /* Off-screen start */
   transform: translateX(-50%);
   animation: fall 1.2s ease-out forwards;
+  z-index: 3;
 }
+
 @keyframes fall {
   0% {
     top: -150px;
@@ -31,12 +58,12 @@ body {
   }
 }
 
-/* === Main Button Styling === */
+/* === Main Button Styling with Glow and Scale on Hover === */
 .menu-toggle {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background-color: #ff6347; /* Tomato */
+  background-color: #6a0572; /* Rich purple */
   color: #fff;
   border: none;
   cursor: pointer;
@@ -44,12 +71,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(106, 5, 114, 0.8), 0 0 30px rgba(106, 5, 114, 0.5);
+  transition: transform 0.3s ease;
   position: relative;
-  z-index: 2;
+  z-index: 4;
 }
 .menu-toggle:hover {
-  background-color: #ff8361;
+  transform: scale(1.05);
+  background-color: #7a1680;
 }
 
 /* === Radial Menu Container === */
@@ -59,15 +88,13 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* Until active, items won’t receive pointer events */
+  pointer-events: none;
 }
-/* Enable pointer events once active */
 .nav-wrapper.active .menu {
   pointer-events: auto;
 }
 
 /* === Orbiting Menu Items === */
-/* Each wrapper is centered on the main button */
 .menu-item-wrapper {
   position: absolute;
   top: 50%;
@@ -76,7 +103,7 @@ body {
 }
 
 /* When active, each wrapper animates its orbit rotation */
-/* Final positions (by rotation angle):
+/* Final positions:
    - 1st item: Top (0deg)
    - 2nd item: Right (90deg)
    - 3rd item: Down (180deg)
@@ -96,64 +123,52 @@ body {
 }
 
 @keyframes orbit-top {
-  from {
-    transform: translate(-50%, -50%) rotate(-360deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
+  from { transform: translate(-50%, -50%) rotate(-360deg); }
+  to   { transform: translate(-50%, -50%) rotate(0deg); }
 }
 @keyframes orbit-right {
-  from {
-    transform: translate(-50%, -50%) rotate(-270deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
+  from { transform: translate(-50%, -50%) rotate(-270deg); }
+  to   { transform: translate(-50%, -50%) rotate(90deg); }
 }
 @keyframes orbit-down {
-  from {
-    transform: translate(-50%, -50%) rotate(-180deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(180deg);
-  }
+  from { transform: translate(-50%, -50%) rotate(-180deg); }
+  to   { transform: translate(-50%, -50%) rotate(180deg); }
 }
 @keyframes orbit-left {
-  from {
-    transform: translate(-50%, -50%) rotate(-90deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(270deg);
-  }
+  from { transform: translate(-50%, -50%) rotate(-90deg); }
+  to   { transform: translate(-50%, -50%) rotate(270deg); }
 }
 
-/* === Menu Item (Outer Circle) === */
-/* Initially hidden (opacity: 0) so letters aren’t visible before animation */
+/* === Menu Item (Outer Circle) with Hover Effects === */
 .menu-item {
-  width: 80px;
-  height: 80px;
-  color: #fff;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background-color: #333;
+  background-color: #4e2a7e; /* Dark purple tone */
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
   opacity: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-/* Animate the menu item only when the nav-wrapper is active */
 .nav-wrapper.active .menu-item {
   animation: moveOut 0.6s ease-out forwards;
 }
+
+.menu-item:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
 @keyframes moveOut {
   from {
     transform: translate(0, 0);
     opacity: 0;
   }
   to {
-    transform: translate(0, -140px);
+    transform: translate(0, -170px);
     opacity: 1;
   }
 }
@@ -161,8 +176,9 @@ body {
 /* === Inner Text: Counter Rotate to Remain Upright === */
 .menu-item-inner {
   display: block;
+  color: #fff;
 }
-/* Each inner element animates a counter rotation to cancel its parent’s rotation */
+
 .nav-wrapper.active .menu-item-wrapper:nth-child(1) .menu-item-inner {
   animation: counter-rotate-top 0.6s ease-out forwards;
 }

@@ -1,25 +1,95 @@
+// ===== IT-Themed Network Background Animation =====
+function initNetwork() {
+  const canvas = document.getElementById('networkCanvas');
+  const ctx = canvas.getContext('2d');
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+
+  const nodes = [];
+  const nodeCount = 50; // Number of nodes
+  const maxDistance = 100; // Maximum distance to draw connecting lines
+
+  // Create nodes with random positions and small velocities
+  for (let i = 0; i < nodeCount; i++) {
+    nodes.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5
+    });
+  }
+
+  function update() {
+    ctx.clearRect(0, 0, width, height);
+
+    // Update positions and draw nodes
+    for (let i = 0; i < nodeCount; i++) {
+      const node = nodes[i];
+      node.x += node.vx;
+      node.y += node.vy;
+
+      // Bounce off edges
+      if (node.x < 0 || node.x > width) node.vx = -node.vx;
+      if (node.y < 0 || node.y > height) node.vy = -node.vy;
+
+      // Draw node as a small circle
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, 2, 0, 2 * Math.PI);
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      ctx.fill();
+    }
+
+    // Draw lines between nodes if close enough
+    for (let i = 0; i < nodeCount; i++) {
+      for (let j = i + 1; j < nodeCount; j++) {
+        const nodeA = nodes[i];
+        const nodeB = nodes[j];
+        const dx = nodeA.x - nodeB.x;
+        const dy = nodeA.y - nodeB.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < maxDistance) {
+          ctx.beginPath();
+          ctx.moveTo(nodeA.x, nodeA.y);
+          ctx.lineTo(nodeB.x, nodeB.y);
+          ctx.strokeStyle = "rgba(255,255,255," + (1 - distance / maxDistance) + ")";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  update();
+
+  // Update canvas size on window resize
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+}
+
+initNetwork();
+
+// ===== Navigation and Menu Animations =====
 const navWrapper = document.getElementById('navWrapper');
 const menuToggle = document.getElementById('menuToggle');
 
-// Once the falling animation of the nav-wrapper finishes, add the active class.
-// This triggers the orbit animations of the menu items.
-navWrapper.addEventListener('animationend', function () {
+// Once the falling animation finishes, add the "active" class to trigger orbit animations.
+navWrapper.addEventListener('animationend', () => {
   navWrapper.classList.add('active');
 });
 
-// Since the main button should no longer close the menu, we only allow it to open the menu.
-// Here, if the menu isn’t active (e.g. on first click before the fall completes), we add the active class.
-// Once active, further clicks do nothing.
-menuToggle.addEventListener('click', function (e) {
+// The main button now only opens the menu (if not already active).
+menuToggle.addEventListener('click', (e) => {
   if (!navWrapper.classList.contains('active')) {
     navWrapper.classList.add('active');
   }
   e.stopPropagation();
 });
 
-// Remove any logic that closes the menu on outside clicks.
-// The menu will remain open once activated.
-document.addEventListener('click', function (e) {
+// No outside-click logic—the menu remains open once activated.
+document.addEventListener('click', () => {
   // No action here.
 });
-

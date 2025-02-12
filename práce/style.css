@@ -1,11 +1,10 @@
-/* Basic Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body with a rich diagonal gradient background for depth */
+
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #1a1a40, #000020);
@@ -13,8 +12,15 @@ body {
   overflow: hidden;
   position: relative;
 }
+.logo{
+  border-radius: 50%;
+  padding: 5px;
+  width: 120px;
 
-/* === IT-Themed Network Canvas Background === */
+}
+
+
+
 #networkCanvas {
   position: fixed;
   top: 0;

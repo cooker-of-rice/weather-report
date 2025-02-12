@@ -5,16 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weather Dashboard</title>
   <link rel="stylesheet" href="styles.css" />
-  <!-- Chart.js CDN -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>Weather Dashboard</h1>
+      <select id="city-select">
+        <option value="Berlin">Berlin</option>
+        <option value="Prague">Prague</option>
+        <option value="Paris">Paris</option>
+        <option value="Washington">Washington</option>
+      </select>
     </header>
 
-    <!-- Current Weather Section -->
     <section id="current-weather" class="card">
       <h2>Current Weather</h2>
       <div class="weather-info">
@@ -27,13 +32,22 @@
       </div>
     </section>
 
-    <!-- Forecast Chart Section -->
     <section id="forecast" class="card">
       <h2>5‑Day Forecast</h2>
-      <canvas id="forecastChart"></canvas>
+      <div class="chart" id="tempChartContainer">
+        <canvas id="tempChart"></canvas>
+      </div>
+      <div class="chart" id="humidityChartContainer">
+        <canvas id="humidityChart"></canvas>
+      </div>
+      <div class="chart" id="windChartContainer">
+        <canvas id="windChart"></canvas>
+      </div>
+      <div class="chart" id="pressureChartContainer">
+        <canvas id="pressureChart"></canvas>
+      </div>
     </section>
   </div>
-
   <script src="app.js"></script>
 </body>
 </html>

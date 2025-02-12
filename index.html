@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Weather Dashboard</title>
+  <title>Meteo Panel</title>
   <link rel="stylesheet" href="styles.css" />
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>Weather Dashboard</h1>
-      <select id="city-select">
-        <option value="Berlin">Berlin</option>
-        <option value="Prague">Prague</option>
-        <option value="Paris">Paris</option>
-        <option value="Washington">Washington</option>
-      </select>
+      <h1>Meteo Panel</h1>
+      <div class="city-selector">
+        <label for="city-select">Vyberte město:</label>
+        <select id="city-select">
+          <option value="Berlin">Berlín</option>
+          <option value="Prague" selected>Praha</option>
+          <option value="Paris">Paříž</option>
+          <option value="Washington">Washington</option>
+        </select>
+      </div>
     </header>
 
+    <!-- Aktuální počasí -->
     <section id="current-weather" class="card">
-      <h2>Current Weather</h2>
+      <h2>Aktuální počasí</h2>
       <div class="weather-info">
         <div id="weather-icon"></div>
         <div id="weather-details">
@@ -32,22 +34,14 @@
       </div>
     </section>
 
+    <!-- Předpověď na 5 dní -->
     <section id="forecast" class="card">
-      <h2>5‑Day Forecast</h2>
-      <div class="chart" id="tempChartContainer">
-        <canvas id="tempChart"></canvas>
-      </div>
-      <div class="chart" id="humidityChartContainer">
-        <canvas id="humidityChart"></canvas>
-      </div>
-      <div class="chart" id="windChartContainer">
-        <canvas id="windChart"></canvas>
-      </div>
-      <div class="chart" id="pressureChartContainer">
-        <canvas id="pressureChart"></canvas>
-      </div>
+      <h2>Předpověď na 5 dní</h2>
+      <div id="forecast-container"></div>
+      <div id="hourly-container" class="hourly-forecast"></div>
     </section>
   </div>
+
   <script src="app.js"></script>
 </body>
 </html>

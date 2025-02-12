@@ -1,10 +1,11 @@
+/* Basic Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
+/* Body with a rich diagonal gradient background for depth */
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #1a1a40, #000020);
@@ -12,15 +13,15 @@ body {
   overflow: hidden;
   position: relative;
 }
-.logo{
+
+/* Logo image styling */
+.logo {
   border-radius: 50%;
   padding: 5px;
   width: 120px;
-
 }
 
-
-
+/* IT-themed network canvas background */
 #networkCanvas {
   position: fixed;
   top: 0;
@@ -30,7 +31,39 @@ body {
   z-index: 0; /* Behind all elements */
 }
 
-/* === Tagline Styling === */
+/* Decorative Side Patterns */
+/* They fill the left/right sides with a subtle digital/circuit-inspired pattern */
+.side-pattern {
+  position: fixed;
+  top: 0;
+  width: 15vw; /* 15% of viewport width; adjust as needed */
+  height: 100vh;
+  z-index: 1; /* Above canvas but behind main content */
+  pointer-events: none;
+  opacity: 0.3;
+}
+.side-pattern.left {
+  left: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.1) 10px,
+    rgba(255, 255, 255, 0.1) 20px
+  );
+}
+.side-pattern.right {
+  right: 0;
+  background: repeating-linear-gradient(
+    315deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.1) 10px,
+    rgba(255, 255, 255, 0.1) 20px
+  );
+}
+
+/* Tagline Styling */
 .tagline {
   position: absolute;
   top: 20px;
@@ -43,7 +76,7 @@ body {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
-/* === Falling Animation for the Main Button === */
+/* Falling Animation for the Main Button */
 .nav-wrapper {
   position: absolute;
   left: 50%;
@@ -64,7 +97,7 @@ body {
   }
 }
 
-/* === Main Button Styling with Glow and Scale on Hover === */
+/* Main Button Styling with Glow and Scale on Hover */
 .menu-toggle {
   width: 120px;
   height: 120px;
@@ -77,7 +110,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 15px rgba(106, 5, 114, 0.8), 0 0 30px rgba(106, 5, 114, 0.5);
+  box-shadow: 0 0 15px rgba(106, 5, 114, 0.8),
+              0 0 30px rgba(106, 5, 114, 0.5);
   transition: transform 0.3s ease;
   position: relative;
   z-index: 4;
@@ -87,7 +121,7 @@ body {
   background-color: #7a1680;
 }
 
-/* === Radial Menu Container === */
+/* Radial Menu Container */
 .menu {
   position: absolute;
   top: 0;
@@ -100,7 +134,7 @@ body {
   pointer-events: auto;
 }
 
-/* === Orbiting Menu Items === */
+/* Orbiting Menu Items (wrappers) */
 .menu-item-wrapper {
   position: absolute;
   top: 50%;
@@ -145,7 +179,12 @@ body {
   to   { transform: translate(-50%, -50%) rotate(270deg); }
 }
 
-/* === Menu Item (Outer Circle) with Hover Effects === */
+/* Define a CSS variable for orbit distance so it can be adjusted responsively */
+:root {
+  --orbit-distance: 170px;
+}
+
+/* Menu Item (Outer Circle) with Hover Effects */
 .menu-item {
   width: 100px;
   height: 100px;
@@ -174,12 +213,13 @@ body {
     opacity: 0;
   }
   to {
-    transform: translate(0, -170px);
+    /* Use the CSS variable to control the offset */
+    transform: translate(0, calc(-1 * var(--orbit-distance)));
     opacity: 1;
   }
 }
 
-/* === Inner Text: Counter Rotate to Remain Upright === */
+/* Inner Text: Counter Rotate to Remain Upright */
 .menu-item-inner {
   display: block;
   color: #fff;
@@ -213,4 +253,60 @@ body {
 @keyframes counter-rotate-left {
   from { transform: rotate(90deg); }
   to   { transform: rotate(-270deg); }
+}
+
+/* Responsive Adjustments */
+
+/* For small screens */
+@media screen and (max-width: 600px) {
+  :root {
+    --orbit-distance: 130px;
+  }
+  .menu-toggle {
+    width: 90px;
+    height: 90px;
+    font-size: 24px;
+  }
+  .menu-item {
+    width: 70px;
+    height: 70px;
+    font-size: 14px;
+  }
+  .logo {
+    width: 90px;
+  }
+  .tagline {
+    font-size: 18px;
+  }
+  /* Adjust side patterns */
+  .side-pattern {
+    width: 20vw;
+  }
+}
+
+/* For large screens */
+@media screen and (min-width: 1200px) {
+  :root {
+    --orbit-distance: 220px;
+  }
+  .menu-toggle {
+    width: 150px;
+    height: 150px;
+    font-size: 36px;
+  }
+  .menu-item {
+    width: 120px;
+    height: 120px;
+    font-size: 20px;
+  }
+  .logo {
+    width: 150px;
+  }
+  .tagline {
+    font-size: 28px;
+  }
+  /* Adjust side patterns */
+  .side-pattern {
+    width: 12vw;
+  }
 }

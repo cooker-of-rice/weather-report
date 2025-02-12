@@ -2,14 +2,16 @@
 function initNetwork() {
   const canvas = document.getElementById('networkCanvas');
   const ctx = canvas.getContext('2d');
+
+  // Cache window dimensions and update them on resize with a debounce
   let width = canvas.width = window.innerWidth;
   let height = canvas.height = window.innerHeight;
 
   const nodes = [];
-  const nodeCount = 50; // Number of nodes
+  const nodeCount = 50; // You can lower this number if needed for performance
   const maxDistance = 100; // Maximum distance to draw connecting lines
 
-  // Create nodes with random positions and small velocities
+  // Pre-create nodes with random positions and velocities
   for (let i = 0; i < nodeCount; i++) {
     nodes.push({
       x: Math.random() * width,
@@ -20,6 +22,7 @@ function initNetwork() {
   }
 
   function update() {
+    // Clear the canvas
     ctx.clearRect(0, 0, width, height);
 
     // Update positions and draw nodes
@@ -32,7 +35,7 @@ function initNetwork() {
       if (node.x < 0 || node.x > width) node.vx = -node.vx;
       if (node.y < 0 || node.y > height) node.vy = -node.vy;
 
-      // Draw node as a small circle
+      // Draw the node (batch draw similar nodes might help if using Path2D, but here it is simple)
       ctx.beginPath();
       ctx.arc(node.x, node.y, 2, 0, 2 * Math.PI);
       ctx.fillStyle = "rgba(255,255,255,0.8)";
@@ -51,7 +54,7 @@ function initNetwork() {
           ctx.beginPath();
           ctx.moveTo(nodeA.x, nodeA.y);
           ctx.lineTo(nodeB.x, nodeB.y);
-          ctx.strokeStyle = "rgba(255,255,255," + (1 - distance / maxDistance) + ")";
+          ctx.strokeStyle = `rgba(255,255,255,${1 - distance / maxDistance})`;
           ctx.lineWidth = 1;
           ctx.stroke();
         }
@@ -63,16 +66,21 @@ function initNetwork() {
 
   update();
 
-  // Update canvas size on window resize
+  // Debounce resize events to avoid excessive recalculations
+  let resizeTimeout;
   window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }, 150);
   });
 }
 
 initNetwork();
 
 // ===== Navigation and Menu Animations =====
+// Cache DOM elements
 const navWrapper = document.getElementById('navWrapper');
 const menuToggle = document.getElementById('menuToggle');
 
@@ -91,5 +99,5 @@ menuToggle.addEventListener('click', (e) => {
 
 // No outside-click logic—the menu remains open once activated.
 document.addEventListener('click', () => {
-  // No action here.
+  // No action needed.
 });

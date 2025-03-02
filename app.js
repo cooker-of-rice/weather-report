@@ -1,4 +1,4 @@
-const apiKey = '5ad3416bd1d37280151e838cf6b4f4f0';
+const apiKey = '';
 let currentCity = document.getElementById('city-select').value;
 
 // Načtení aktuálního počasí
